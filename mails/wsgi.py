@@ -30,7 +30,7 @@ def send_email():
         # Start a new thread for async sending
         thread = threading.Thread(target=send_async_email, args=(app, msg))
         thread.start()
-
+        print(thread.is_alive)
         return jsonify({'status': 'Email is being sent asynchronously'}), 200
     except:
         return jsonify({'status': 'Email failed to send asynchronously'}), 400
