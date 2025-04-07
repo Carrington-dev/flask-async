@@ -1,0 +1,4 @@
+flask
+sparkpost
+Flask-Mail
+python-decouple
