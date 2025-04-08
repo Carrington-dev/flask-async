@@ -16,7 +16,7 @@ sp = SparkPost(SPARKPOST_API_KEY)
 def load_html_template(name: str) -> str:
     with open("send.html", "r", encoding="utf-8") as file:
         template = Template(file.read())
-        return template.safe_substitute(name=name)
+        return template.safe_substitute({ name: name})
 
 def send_email_async(to, subject, message):
     try:
