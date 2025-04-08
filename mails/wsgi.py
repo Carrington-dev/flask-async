@@ -10,7 +10,9 @@ app.config['MAIL_SERVER'] = 'smtp.sparkpostmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'SMTP_Injection'
+# app.config['MAIL_USERNAME'] = 'noreply@ruma.stemgon.co.za'
 app.config['MAIL_PASSWORD'] = config("MAIL_PASSWORD")  # Consider using environment variables
+app.config['MAIL_USE_SSL'] = False
 
 mail = Mail(app)
 
@@ -19,7 +21,7 @@ def send_async_email(app, msg):
     with app.app_context():
         mail.send(msg)
 
-@app.route('/send-email', ["GET", "POST"])
+@app.route('/send-email', methods=["GET", "POST"])
 def send_email():
     try:
         msg = Message('Hello from Flask',
@@ -34,6 +36,17 @@ def send_email():
         return jsonify({'status': 'Email is being sent asynchronously'}), 200
     except:
         return jsonify({'status': 'Email failed to send asynchronously'}), 400
+    
+@app.route("/")
+def index():
+    try:
+        msg = Message(subject='Hello from the other side!', sender='peter@mailtrap.io', recipients=['paul@mailtrap.io'])
+        msg.body = "Hey Paul, sending you this email from my Flask app, lmk if it works."
+        mail.send(msg)
+        return "Message sent!"
+    except Exception as e:
+        print(e)
+        return "Message not sent!"
 
 if __name__ == "__main__":
     app.run(debug=True)
