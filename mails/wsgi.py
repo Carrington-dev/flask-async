@@ -19,7 +19,7 @@ def send_async_email(app, msg):
     with app.app_context():
         mail.send(msg)
 
-@app.route('/send-email')
+@app.route('/send-email', ["GET", "POST"])
 def send_email():
     try:
         msg = Message('Hello from Flask',
