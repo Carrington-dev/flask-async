@@ -26,14 +26,16 @@ def send_email_async(to, subject, message):
         html_content = load_html_template(name="Carrington")
         sp.transmissions.send(
             # recipients=[to],
-             recipients=[{
-                'address': to,
-                'substitution_data': {
-                    'username': 'Carrington06',
-                    'name': 'Carrington',
-                    'otp': '876098'
-                }
-            }],
+             recipients=[
+                 {
+                    'address': to,
+                    'substitution_data': {
+                        'username': 'Carrington06',
+                        'name': 'Carrington',
+                        'otp': '876098'
+                    }
+                },
+            ],
             html=html_content,
             from_email='Payglen <noreply@ruma.stemgon.co.za>',
             subject=subject
