@@ -16,13 +16,24 @@ sp = SparkPost(SPARKPOST_API_KEY)
 def load_html_template(name: str) -> str:
     with open("send.html", "r", encoding="utf-8") as file:
         template = Template(file.read())
-        return template.safe_substitute({ name: name})
+        return template.safe_substitute({"substitution_data": { 
+                "name": "john",
+                "otp": "123456"
+            }})
 
 def send_email_async(to, subject, message):
     try:
         html_content = load_html_template(name="Carrington")
         sp.transmissions.send(
-            recipients=[to],
+            # recipients=[to],
+             recipients=[{
+                'address': to,
+                'substitution_data': {
+                    'username': 'Carrington06',
+                    'name': 'Carrington',
+                    'otp': '876098'
+                }
+            }],
             html=html_content,
             from_email='Payglen <noreply@ruma.stemgon.co.za>',
             subject=subject
