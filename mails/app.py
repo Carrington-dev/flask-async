@@ -48,7 +48,7 @@ def send_email():
     data = request.get_json()
     if data is None:
         return jsonify({"error": "No JSON data provided"}), 400
-    
+    print(data)
     to = data.get('to', ADMIN_EMAIL)
     subject = data.get('subject', "Testing App")
     message = data.get('message', "Testing App")
@@ -58,5 +58,7 @@ def send_email():
 
     return jsonify({'status': 'Email is being sent asynchronously'}), 200
 
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8900)
